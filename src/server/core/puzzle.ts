@@ -13,7 +13,7 @@ export type StoredPuzzle = { date: string; number: number; rounds: StoredRound[]
 
 export const ROUNDS = 5;
 export const OPTIONS = 4;
-const EPOCH = Date.UTC(2026, 10, 15); // puzzle #1 = 15 Nov 2026
+const EPOCH = Date.UTC(2026, 10, 14); // puzzle #1 = 14 Nov 2026, the first daily post
 const DAY_MS = 86_400_000;
 
 export const todayKey = (): string => new Date().toISOString().slice(0, 10);
@@ -82,7 +82,9 @@ export const generatePuzzle = async (date: string): Promise<StoredPuzzle> => {
 
 export const getPuzzle = async (date: string): Promise<StoredPuzzle | null> => {
   const raw = await redis.get(`puzzle:${date}`);
-  return raw ? (JSON.parse(raw) as StoredPuzzle) : null;
+  if (!raw) return null;
+  const puzzle = JSON.parse(raw) as StoredPuzzle;
+  return { ...puzzle, number: puzzleNumber(date) };
 };
 
 export const getOrCreatePuzzle = async (date: string): Promise<StoredPuzzle> => {

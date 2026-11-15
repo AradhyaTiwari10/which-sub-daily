@@ -25,6 +25,13 @@
         "location": "subreddit",
         "forUserType": "moderator",
         "endpoint": "/internal/menu/post-create"
+      },
+      {
+        "label": "Which Sub? - reset my progress for today",
+        "description": "Moderators only: clears your own answers, score and leaderboard entry for today so you can test again",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/reset-me"
       }
     ]
   },
